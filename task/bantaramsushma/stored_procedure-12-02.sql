@@ -22,3 +22,33 @@ begin
 end;
 
 call my_sp();
+
+
+create or replace table customer_ta (
+id number primary key,
+emp_name string,
+flag_val number
+);
+
+insert into customer_ta(id,emp_name,flag_val)
+values(1,'ravi',-1),
+(2,'raj',1),
+(3,'rakesh',-1);
+
+create or replace procedure deleting_inactive_flag()
+returns text
+language sql
+as
+declare 
+    flag_v number(1) default -1;
+begin 
+    let sql_stat := 'delete from customer_ta where flag_val =' || flag_v;
+
+    execute immediate sql_stat;
+
+    return 'inactive customers deleted';
+end;
+
+call deleting_inactive_flag(); 
+
+select * from customer_ta;
