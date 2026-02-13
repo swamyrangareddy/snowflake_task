@@ -39,3 +39,27 @@ begin
 end;
 
 call my_context();
+
+
+---IF THEN ----------------------------------------------------------------------------------
+
+
+create or replace procedure cal_sales_bonous(sales_val float)
+returns float
+language sql 
+as 
+declare 
+    bonous float default 0;
+    sales_target float default 1000;
+    default_bonous float default 100;
+begin 
+    if (sales_val > sales_target) then
+    bonous := (sales_val - sales_target) * 0.1;
+    else 
+    bonous := default_bonous;
+    end if;
+
+    return bonous;
+end;
+
+call cal_sales_bonous(800);
